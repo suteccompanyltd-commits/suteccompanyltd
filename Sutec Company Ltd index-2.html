@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SUTEC COMPANY LTD</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#132033}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+:root{--navy:#071a35;--blue:#0d47a1;--orange:#ff8a00;--green:#10a36b;--white:#fff}
+#welcome{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(145deg,#06162e,#0d47a1)}
+.wbox{width:min(460px,100%);background:#fff;border-radius:28px;padding:34px 24px;text-align:center;box-shadow:0 20px 60px #0005}
+.logo{font-weight:900;letter-spacing:2px;font-size:42px;color:var(--navy)}.logo span{display:block;font-size:13px;letter-spacing:5px;color:var(--orange);margin-top:3px}
+.tag{color:#667085;margin:12px 0 28px}.welcomeIcon{font-size:58px;margin:12px}
+.btn{padding:13px 18px;border-radius:12px;font-weight:800}.primary{background:var(--orange);color:#fff}.secondary{background:#eaf1ff;color:var(--blue)}.full{width:100%;margin-top:10px}
+#app{display:none}.top{position:sticky;top:0;z-index:10;background:var(--navy);color:#fff;padding:12px 15px;display:flex;align-items:center;gap:12px}
+.top .logo{font-size:22px;color:#fff;margin-right:auto}.top .logo span{display:inline;font-size:9px;color:var(--orange);letter-spacing:2px;margin-left:4px}
+.iconbtn{background:#fff1;color:#fff;padding:9px 11px;border-radius:10px}
+.hero{margin:16px;background:linear-gradient(135deg,#071a35,#0d47a1);color:#fff;border-radius:22px;padding:25px 20px}.hero h1{margin:0 0 8px;font-size:29px}.hero p{margin:0 0 17px;color:#dbe7ff}
+.search{padding:0 16px;margin:10px 0}.search input{width:100%;padding:14px;border:1px solid #d7deea;border-radius:14px;outline:none}
+.cats{display:flex;gap:9px;overflow:auto;padding:8px 16px 15px}.cat{white-space:nowrap;background:#fff;padding:10px 14px;border-radius:20px;border:1px solid #dde4ef}.cat.active{background:var(--navy);color:#fff}
+.section{padding:0 16px}.section h2{font-size:21px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{background:#fff;border-radius:18px;padding:13px;box-shadow:0 5px 18px #13203312}.pic{height:110px;border-radius:14px;background:linear-gradient(135deg,#eaf1ff,#f9fafb);display:flex;align-items:center;justify-content:center;font-size:48px}.card h3{font-size:15px;margin:10px 0 5px}.price{font-weight:900;color:var(--blue);margin-bottom:10px}.card .btn{width:100%;padding:10px}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:10px;z-index:9}.bottom button{background:none;color:#344054}.bottom b{display:block;font-size:11px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;padding:18px;overflow:auto}.box{background:#fff;border-radius:20px;padding:22px;max-width:520px;margin:30px auto}.box h2{margin-top:0}.close{float:right;background:#eef2f7;border-radius:50%;width:32px;height:32px}.field{margin:10px 0}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid #ccd5e3;border-radius:10px}.row{display:flex;gap:10px}.row>*{flex:1}.notice{padding:12px;background:#fff7e8;border-left:4px solid var(--orange);border-radius:10px;margin:10px 0;font-size:13px}.order{border:1px solid #e1e6ef;border-radius:14px;padding:14px;margin:10px 0}.status{display:inline-block;padding:6px 9px;border-radius:20px;background:#e9f7f1;color:#08744b;font-size:12px;font-weight:800}.adminstat{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:15px;background:#f4f7fb;border-radius:14px}.stat strong{font-size:24px;display:block}
+.empty{text-align:center;color:#667085;padding:30px}.hide{display:none!important}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.hero{max-width:1000px;margin:20px auto}.section,.search,.cats{max-width:1000px;margin-left:auto;margin-right:auto}}
+</style>
+</head>
+<body>
+
+<section id="welcome">
+  <div class="wbox">
+    <div class="welcomeIcon">⚡</div>
+    <div class="logo">SUTEC<span>COMPANY LTD</span></div>
+    <p class="tag">Technology • Electronics • Electrical • Mobile • Software</p>
+    <p>Welcome to SUTEC COMPANY LTD. Create an account or log in to enter the store.</p>
+    <button class="btn primary full" onclick="openAuth('signup')">Create Account</button>
+    <button class="btn secondary full" onclick="openAuth('login')">Log In</button>
+  </div>
+</section>
+
+<div id="app">
+<header class="top">
+  <div class="logo">SUTEC<span>COMPANY LTD</span></div>
+  <button class="iconbtn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+  <button class="iconbtn" onclick="openOrders()">📦</button>
+  <button class="iconbtn" onclick="logout()">↪</button>
+</header>
+
+<section class="hero">
+  <h1>Technology for a Better Future</h1>
+  <p>Shop electronics, electrical products, phones, computers, solar products and more.</p>
+  <button class="btn primary" onclick="document.getElementById('products').scrollIntoView()">Shop Now</button>
+</section>
+
+<div class="search"><input id="search" placeholder="Search products..." oninput="renderProducts()"></div>
+<div class="cats" id="cats"></div>
+<section class="section" id="products"><h2>Products</h2><div class="grid" id="grid"></div></section>
+
+<div class="bottom">
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})">🏠<b>Home</b></button>
+<button onclick="openCart()">🛒<b>Cart</b></button>
+<button onclick="openOrders()">📦<b>Orders</b></button>
+<button onclick="openProfile()">👤<b>Account</b></button>
+<button onclick="openAdmin()">🔐<b>Admin</b></button>
+</div>
+</div>
+
+<div class="modal" id="authModal"><div class="box">
+<button class="close" onclick="closeModal('authModal')">×</button>
+<h2 id="authTitle">Create Account</h2>
+<div id="signupFields">
+<div class="field"><label>Full name</label><input id="sname"></div>
+<div class="field"><label>Phone number</label><input id="sphone" type="tel"></div>
+</div>
+<div class="field"><label>Email</label><input id="email" type="email"></div>
+<div class="field"><label>Password</label><input id="password" type="password"></div>
+<button class="btn primary full" id="authBtn" onclick="submitAuth()">Create Account</button>
+<p style="text-align:center"><button style="background:none;color:#0d47a1" onclick="switchAuth()">Switch to Log In / Sign Up</button></p>
+</div></div>
+
+<div class="modal" id="cartModal"><div class="box">
+<button class="close" onclick="closeModal('cartModal')">×</button><h2>Your Cart</h2><div id="cartItems"></div>
+<div id="cartTotal"></div><button class="btn primary full" onclick="checkout()">Proceed to Checkout</button>
+</div></div>
+
+<div class="modal" id="checkoutModal"><div class="box">
+<button class="close" onclick="closeModal('checkoutModal')">×</button><h2>Checkout</h2>
+<div class="field"><label>Name</label><input id="cname"></div>
+<div class="field"><label>Phone</label><input id="cphone"></div>
+<div class="field"><label>Delivery address</label><textarea id="caddress" rows="3"></textarea></div>
+<div class="notice"><b>Payment:</b> OPay<br>Account: 8104867499<br>Name: Muhammad Mustapha Dauda<br>Delivery charge: ₦1,000</div>
+<div id="checkoutTotal"></div>
+<button class="btn primary full" onclick="placeOrder()">Place Order</button>
+</div></div>
+
+<div class="modal" id="ordersModal"><div class="box">
+<button class="close" onclick="closeModal('ordersModal')">×</button><h2>My Orders</h2><div id="orders"></div>
+</div></div>
+
+<div class="modal" id="profileModal"><div class="box">
+<button class="close" onclick="closeModal('profileModal')">×</button><h2>My Account</h2><div id="profile"></div>
+</div></div>
+
+<div class="modal" id="adminModal"><div class="box">
+<button class="close" onclick="closeModal('adminModal')">×</button><div id="adminContent">
+<h2>Admin Login</h2>
+<div class="field"><label>Admin username</label><input id="adminUser"></div>
+<div class="field"><label>Admin password</label><input id="adminPass" type="password"></div>
+<button class="btn primary full" onclick="adminLogin()">Enter Dashboard</button>
+</div></div></div>
+
+<script>
+const PRODUCTS=[
+{id:1,n:"SUTEC Smart Phone",p:50000,c:"Phones",i:"📱"},
+{id:2,n:"LED Smart Television",p:150000,c:"Electronics",i:"📺"},
+{id:3,n:"Electric Standing Fan",p:35000,c:"Electrical",i:"🌀"},
+{id:4,n:"Electrical Accessories",p:15000,c:"Electrical",i:"🔌"},
+{id:5,n:"Laptop Computer",p:250000,c:"Computers",i:"💻"},
+{id:6,n:"Solar Panel",p:120000,c:"Solar",i:"☀️"},
+{id:7,n:"Solar Inverter",p:180000,c:"Solar",i:"🔋"},
+{id:8,n:"Bluetooth Speaker",p:25000,c:"Electronics",i:"🔊"},
+{id:9,n:"Power Bank",p:18000,c:"Mobile",i:"🔋"},
+{id:10,n:"USB Fast Charger",p:7000,c:"Mobile",i:"⚡"},
+{id:11,n:"Gas Cooker",p:45000,c:"Home & Energy",i:"🔥"},
+{id:12,n:"Engine Oil",p:8000,c:"Automotive",i:"🛢️"}
+];
+
+const FORM_ENDPOINT="https://formspree.io/f/xljdvklb";
+let cart=JSON.parse(localStorage.getItem("sutec_cart")||"[]");
+let current=JSON.parse(localStorage.getItem("sutec_current_user")||"null");
+let category="All",authMode="signup";
+
+function money(n){return "₦"+Number(n).toLocaleString("en-NG")}
+function save(){localStorage.setItem("sutec_cart",JSON.stringify(cart));updateCount()}
+function updateCount(){document.getElementById("cartCount").textContent=cart.reduce((a,b)=>a+b.q,0)}
+function openModal(id){document.getElementById(id).style.display="block"}
+function closeModal(id){document.getElementById(id).style.display="none"}
+
+function openAuth(mode){authMode=mode;document.getElementById("authTitle").textContent=mode==="signup"?"Create Account":"Log In";document.getElementById("authBtn").textContent=mode==="signup"?"Create Account":"Log In";document.getElementById("signupFields").style.display=mode==="signup"?"block":"none";openModal("authModal")}
+function switchAuth(){openAuth(authMode==="signup"?"login":"signup")}
+function submitAuth(){
+ let email=document.getElementById("email").value.trim(),pass=document.getElementById("password").value;
+ if(!email||!pass){alert("Enter your email and password.");return}
+ let users=JSON.parse(localStorage.getItem("sutec_users")||"[]");
+ if(authMode==="signup"){
+   let name=document.getElementById("sname").value.trim(),phone=document.getElementById("sphone").value.trim();
+   if(!name||!phone){alert("Enter your name and phone number.");return}
+   if(users.some(u=>u.email===email)){alert("Account already exists. Please log in.");openAuth("login");return}
+   current={name,phone,email};users.push({...current,password:pass});localStorage.setItem("sutec_users",JSON.stringify(users));
+   notify("New SUTEC signup",name+" ("+email+") created an account.");
+   enterStore();
+ }else{
+   let u=users.find(x=>x.email===email&&x.password===pass);
+   if(!u){alert("Incorrect email or password.");return}
+   current={name:u.name,phone:u.phone,email:u.email};localStorage.setItem("sutec_current_user",JSON.stringify(current));
+   notify("SUTEC customer login",current.name+" ("+current.email+") logged in.");
+   enterStore();
+ }
+}
+function enterStore(){localStorage.setItem("sutec_current_user",JSON.stringify(current));closeModal("authModal");document.getElementById("welcome").style.display="none";document.getElementById("app").style.display="block";renderCats();renderProducts();updateCount()}
+function logout(){current=null;localStorage.removeItem("sutec_current_user");document.getElementById("app").style.display="none";document.getElementById("welcome").style.display="flex"}
+function renderCats(){let cs=["All",...new Set(PRODUCTS.map(x=>x.c))];document.getElementById("cats").innerHTML=cs.map(x=>`<button class="cat ${x===category?"active":""}" onclick="category='${x.replace(/'/g,"\\'")}';renderCats();renderProducts()">${x}</button>`).join("")}
+function renderProducts(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=PRODUCTS.filter(x=>(category==="All"||x.c===category)&&x.n.toLowerCase().includes(q));
+ document.getElementById("grid").innerHTML=list.length?list.map(x=>`<div class="card"><div class="pic">${x.i}</div><h3>${x.n}</h3><div class="price">${money(x.p)}</div><button class="btn primary" onclick="add(${x.id})">Add to Cart</button></div>`).join(""):`<div class="empty">No products found.</div>`;
+}
+function add(id){let x=cart.find(a=>a.id===id);if(x)x.q++;else cart.push({id,q:1});save();alert("Added to cart.")}
+function openCart(){let box=document.getElementById("cartItems");if(!cart.length)box.innerHTML='<div class="empty">Your cart is empty.</div>';else box.innerHTML=cart.map(x=>{let p=PRODUCTS.find(y=>y.id===x.id);return `<div class="order"><b>${p.n}</b><br>${money(p.p)} × ${x.q}<div class="row" style="margin-top:8px"><button class="btn secondary" onclick="change(${x.id},-1)">−</button><button class="btn secondary" onclick="change(${x.id},1)">+</button><button class="btn secondary" onclick="removeItem(${x.id})">Remove</button></div></div>`}).join("");
+ let subtotal=cart.reduce((s,x)=>s+PRODUCTS.find(p=>p.id===x.id).p*x.q,0);document.getElementById("cartTotal").innerHTML=`<h3>Subtotal: ${money(subtotal)}</h3><p>Delivery: ${money(1000)}</p><h2>Total: ${money(subtotal+1000)}</h2>`;openModal("cartModal")}
+function change(id,n){let x=cart.find(a=>a.id===id);if(!x)return;x.q+=n;if(x.q<=0)cart=cart.filter(a=>a.id!==id);save();openCart()}
+function removeItem(id){cart=cart.filter(a=>a.id!==id);save();openCart()}
+function checkout(){if(!cart.length){alert("Your cart is empty.");return}closeModal("cartModal");document.getElementById("cname").value=current?.name||"";document.getElementById("cphone").value=current?.phone||"";let sub=cart.reduce((s,x)=>s+PRODUCTS.find(p=>p.id===x.id).p*x.q,0);document.getElementById("checkoutTotal").innerHTML=`<h2>Total: ${money(sub+1000)}</h2>`;openModal("checkoutModal")}
+function placeOrder(){
+ let name=document.getElementById("cname").value.trim(),phone=document.getElementById("cphone").value.trim(),address=document.getElementById("caddress").value.trim();if(!name||!phone||!address){alert("Complete your delivery details.");return}
+ let sub=cart.reduce((s,x)=>s+PRODUCTS.find(p=>p.id===x.id).p*x.q,0),ref="SUTEC-"+Date.now().toString().slice(-8);
+ let order={ref,name,phone,address,items:cart.map(x=>{let p=PRODUCTS.find(y=>y.id===x.id);return {name:p.n,price:p.p,q:x.q}}),total:sub+1000,status:"Pending",date:new Date().toLocaleString()};
+ let orders=JSON.parse(localStorage.getItem("sutec_orders")||"[]");orders.unshift(order);localStorage.setItem("sutec_orders",JSON.stringify(orders));notify("New SUTEC order "+ref,JSON.stringify(order));cart=[];save();closeModal("checkoutModal");alert("Order placed successfully. Reference: "+ref);openOrders();
+}
+function openOrders(){let all=JSON.parse(localStorage.getItem("sutec_orders")||"[]");let mine=current?all.filter(o=>o.name===current.name&&o.phone===current.phone):[];document.getElementById("orders").innerHTML=mine.length?mine.map(o=>`<div class="order"><b>${o.ref}</b><br>${o.items.map(i=>i.name+" × "+i.q).join("<br>")}<p>Total: <b>${money(o.total)}</b></p><span class="status">${o.status}</span><small style="display:block;margin-top:7px">${o.date}</small></div>`).join(""):'<div class="empty">No orders yet.</div>';openModal("ordersModal")}
+function openProfile(){document.getElementById("profile").innerHTML=`<p><b>Name:</b> ${current?.name||""}</p><p><b>Phone:</b> ${current?.phone||""}</p><p><b>Email:</b> ${current?.email||""}</p><button class="btn primary full" onclick="logout()">Log Out</button>`;openModal("profileModal")}
+async function notify(subject,message){try{await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({subject,message,source:"SUTEC COMPANY LTD"})})}catch(e){console.log("Notification unavailable",e)}}
+
+function openAdmin(){openModal("adminModal")}
+function adminLogin(){
+ let u=document.getElementById("adminUser").value.trim(),p=document.getElementById("adminPass").value;
+ if(u!=="SUTEC_ADMIN"||p!=="SUTEC@1234"){alert("Invalid admin login.");return}
+ renderAdmin();
+}
+function renderAdmin(){
+ let orders=JSON.parse(localStorage.getItem("sutec_orders")||"[]");
+ document.getElementById("adminContent").innerHTML=`<button class="close" onclick="closeModal('adminModal')">×</button><h2>Admin Dashboard</h2><div class="adminstat"><div class="stat">Pending<strong>${orders.filter(o=>o.status==="Pending").length}</strong></div><div class="stat">Accepted<strong>${orders.filter(o=>o.status==="Accepted").length}</strong></div><div class="stat">Out for Delivery<strong>${orders.filter(o=>o.status==="Out for Delivery").length}</strong></div><div class="stat">Delivered<strong>${orders.filter(o=>o.status==="Delivered").length}</strong></div></div><div style="margin-top:15px">${orders.length?orders.map(o=>`<div class="order"><b>${o.ref}</b><br>${o.name} — ${o.phone}<br>${o.address}<p>${o.items.map(i=>i.name+" × "+i.q).join("<br>")}</p><b>${money(o.total)}</b><p><span class="status">${o.status}</span></p><div class="row"><button class="btn secondary" onclick="setStatus('${o.ref}','Accepted')">Accept</button><button class="btn secondary" onclick="setStatus('${o.ref}','Out for Delivery')">Out for Delivery</button><button class="btn primary" onclick="setStatus('${o.ref}','Delivered')">Delivered</button></div></div>`).join(""):'<div class="empty">No orders.</div>'}</div>`;
+}
+function setStatus(ref,status){let orders=JSON.parse(localStorage.getItem("sutec_orders")||"[]");let o=orders.find(x=>x.ref===ref);if(!o)return;o.status=status;localStorage.setItem("sutec_orders",JSON.stringify(orders));notify("SUTEC order status "+ref,status);renderAdmin()}
+
+if(current)enterStore();
+</script>
+</body>
+</html>
